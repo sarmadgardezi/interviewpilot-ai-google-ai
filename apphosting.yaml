@@ -1,0 +1,75 @@
+# Settings for Cloud Run backend service
+runConfig:
+  minInstances: 0
+  maxInstances: 5
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 1024
+
+# Environment variables and secrets
+env:
+  # Firebase Client Configuration (App Router Client & SSR)
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyB0qGG-uxM8pa8k1ryqYGaGF4EdtfyUakc"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "sg-antigravity.firebaseapp.com"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "sg-antigravity"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "sg-antigravity.firebasestorage.app"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "580909799171"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:580909799171:web:62078704215c1ad520bb36"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_DATABASE_URL
+    value: "https://sg-antigravity-default-rtdb.firebaseio.com"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # AI Provider Configuration (Google AI Studio Gemini Priority 1)
+  - variable: AI_PROVIDER
+    value: "gemini"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: GEMINI_API_KEY
+    value: "AQ.Ab8RN6I-jjqyWOHV2KLdM6-sLXfUs0FnkzvAzRY_bsO-C1kWeQ"
+    availability:
+      - RUNTIME
+
+  # OpenRouter Provider Fallback (Priority 2)
+  - variable: OPENROUTER_API_KEY
+    value: "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"
+    availability:
+      - RUNTIME
+
+  - variable: OPENROUTER_MODEL
+    value: "google/gemma-4-26b-a4b-it:free"
+    availability:
+      - RUNTIME
