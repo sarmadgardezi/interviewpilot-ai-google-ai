@@ -7,46 +7,47 @@ runConfig:
   memoryMiB: 1024
 
 # Environment variables and secrets
+# Replace placeholder values below with your credentials, or connect them via Cloud Secret Manager
 env:
   # Firebase Client Configuration (App Router Client & SSR)
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
-    value: "AIzaSyB0qGG-uxM8pa8k1ryqYGaGF4EdtfyUakc"
+    value: "your_firebase_api_key_here"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-    value: "sg-antigravity.firebaseapp.com"
+    value: "your_project_id.firebaseapp.com"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-    value: "sg-antigravity"
+    value: "your_project_id"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-    value: "sg-antigravity.firebasestorage.app"
+    value: "your_project_id.firebasestorage.app"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-    value: "580909799171"
+    value: "your_messaging_sender_id_here"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_APP_ID
-    value: "1:580909799171:web:62078704215c1ad520bb36"
+    value: "your_firebase_app_id_here"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_DATABASE_URL
-    value: "https://sg-antigravity-default-rtdb.firebaseio.com"
+    value: "https://your_project_id-default-rtdb.firebaseio.com"
     availability:
       - BUILD
       - RUNTIME
@@ -58,14 +59,17 @@ env:
       - BUILD
       - RUNTIME
 
+  # Google AI Studio Gemini API Key
+  # You can specify direct value here or link to Secret Manager: secret: gemini-api-key
   - variable: GEMINI_API_KEY
-    value: "AQ.Ab8RN6I-jjqyWOHV2KLdM6-sLXfUs0FnkzvAzRY_bsO-C1kWeQ"
+    value: "your_google_ai_studio_gemini_key_here"
     availability:
       - RUNTIME
 
   # OpenRouter Provider Fallback (Priority 2)
+  # You can specify direct value here or link to Secret Manager: secret: openrouter-api-key
   - variable: OPENROUTER_API_KEY
-    value: "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"
+    value: "your_openrouter_api_key_here"
     availability:
       - RUNTIME
 
