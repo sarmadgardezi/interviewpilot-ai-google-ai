@@ -70,6 +70,16 @@ async function callGoogleGeminiStudio(
     } catch (err: any) {
       lastError = err.message || String(err);
       console.warn(`Google AI Studio Gemini (${model}) issue:`, lastError);
+
+      // If the API key is invalid/unauthenticated, trying other models will fail identically
+      if (
+        lastError.includes("API key not valid") ||
+        lastError.includes("UNAUTHENTICATED") ||
+        lastError.includes("401") ||
+        lastError.includes("ACCESS_TOKEN_TYPE_UNSUPPORTED")
+      ) {
+        break;
+      }
     }
   }
 
@@ -85,18 +95,22 @@ export async function callGemmaOpenRouter(
   messages: OpenRouterMessage[],
   temperature = 0.5
 ): Promise<string> {
-  // 1. Check for official Google AI Studio Gemini API Key
-  const geminiKey =
-    process.env.GEMINI_API_KEY ||
-    process.env.GOOGLE_API_KEY ||
-    process.env.GOOGLE_GENAI_API_KEY ||
-    "";
+  const providerPref = (process.env.AI_PROVIDER || "").toLowerCase().trim();
 
-  if (geminiKey && geminiKey.trim().length > 0) {
-    try {
-      return await callGoogleGeminiStudio(geminiKey, messages, temperature);
-    } catch (geminiErr) {
-      console.warn("Google AI Studio Gemini call failed, falling back to OpenRouter:", geminiErr);
+  // 1. Check for official Google AI Studio Gemini API Key (unless provider is explicitly set to openrouter)
+  if (providerPref !== "openrouter") {
+    const geminiKey =
+      process.env.GEMINI_API_KEY ||
+      process.env.GOOGLE_API_KEY ||
+      process.env.GOOGLE_GENAI_API_KEY ||
+      "";
+
+    if (geminiKey && geminiKey.trim().length > 0) {
+      try {
+        return await callGoogleGeminiStudio(geminiKey, messages, temperature);
+      } catch (geminiErr) {
+        console.warn("Google AI Studio Gemini call failed, falling back to OpenRouter:", geminiErr);
+      }
     }
   }
 
@@ -143,6 +157,11 @@ export async function callGemmaOpenRouter(
         const errText = await response.text();
         lastError = `Model ${model} returned ${response.status}: ${errText}`;
         console.warn(`OpenRouter model ${model} issue:`, lastError);
+
+        // If the key is invalid / user not found (401), subsequent models will fail identically
+        if (response.status === 401) {
+          break;
+        }
       }
     } catch (e: any) {
       lastError = e.message;
