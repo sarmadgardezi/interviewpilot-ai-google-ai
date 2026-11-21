@@ -6,8 +6,7 @@ runConfig:
   cpu: 1
   memoryMiB: 1024
 
-# Environment variables and secrets
-# Replace placeholder values below with your credentials, or connect them via Cloud Secret Manager
+# Environment variables and secrets (exact mirror of .env)
 env:
   # Firebase Client Configuration (App Router Client & SSR)
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
@@ -46,34 +45,48 @@ env:
       - BUILD
       - RUNTIME
 
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    value: ""
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_DATABASE_URL
     value: "https://sg-antigravity-default-rtdb.firebaseio.com"
     availability:
       - BUILD
       - RUNTIME
 
-  # AI Provider Configuration (Google AI Studio Gemini Priority 1)
+  # AI Provider Configuration
   - variable: AI_PROVIDER
-    value: "gemini"
+    value: "openrouter"
     availability:
       - BUILD
       - RUNTIME
 
-  # Google AI Studio Gemini API Key
-  # You can specify direct value here or link to Secret Manager: secret: gemini-api-key
+  # Google AI Studio Gemini API Keys
   - variable: GEMINI_API_KEY
-    value: "your_google_ai_studio_gemini_key_here"
+    value: ""
     availability:
       - RUNTIME
 
-  # OpenRouter Provider Fallback (Priority 2)
-  # You can specify direct value here or link to Secret Manager: secret: openrouter-api-key
+  - variable: GOOGLE_API_KEY
+    value: ""
+    availability:
+      - RUNTIME
+
+  # OpenRouter Provider Fallback
   - variable: OPENROUTER_API_KEY
-    value: "your_openrouter_api_key_here"
+    value: "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"
     availability:
       - RUNTIME
 
   - variable: OPENROUTER_MODEL
-    value: "google/gemma-4-26b-a4b-it:free"
+    value: "openrouter/free"
+    availability:
+      - RUNTIME
+
+  - variable: api_key
+    value: "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"
     availability:
       - RUNTIME
