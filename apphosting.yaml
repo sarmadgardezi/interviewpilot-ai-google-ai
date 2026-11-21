@@ -74,19 +74,3 @@ env:
     value: ""
     availability:
       - RUNTIME
-
-  # OpenRouter Provider Fallback
-  - variable: OPENROUTER_API_KEY
-    value: "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"
-    availability:
-      - RUNTIME
-
-  - variable: OPENROUTER_MODEL
-    value: "openrouter/free"
-    availability:
-      - RUNTIME
-
-  - variable: api_key
-    value: "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"
-    availability:
-      - RUNTIME
